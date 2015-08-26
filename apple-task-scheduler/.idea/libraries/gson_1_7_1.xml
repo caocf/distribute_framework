@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="gson-1.7.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../work/UltimateAndroid/BluetoothLight/bluetooth_led/libs/gson-1.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../work/UltimateAndroid/BluetoothLight/bluetooth_led/libs/httpmime-4.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
