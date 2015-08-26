@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.appleframework.oss</groupId>
+	<artifactId>apple-oss-boss</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>apple-oss-boss</name>
+	<url>http://mvnrepo.appleframework.com</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.version>1.0.0</project.version>
+		<boss.version>${project.version}</boss.version>
+		<apple.version>0.1.0.RELEASE</apple.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>apple-exception</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+	
+	<modules>
+		<module>apple-oss-boss-core</module>
+		<module>apple-oss-boss-server</module>
+	</modules>
+	
+	<distributionManagement>
+		<repository>
+			<id>apple-releases</id>
+			<name>Apple Releases Repository</name>
+			<url>http://mvnrepo.appleframework.com/nexus/content/repositories/releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>apple-snapshots</id>
+			<name>Apple Snapshots Repository</name>
+			<url>http://mvnrepo.appleframework.com/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

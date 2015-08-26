@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.appleframework.oss.boss.entity.User" table="platform_user">
+        <id name="id" type="java.lang.Integer">
+            <column name="id">
+            	<comment>用户ID号</comment>
+            </column>
+            <generator class="com.appleframework.oss.boss.id.IDGenerator" />
+        </id>        
+        
+        <property name="username" type="java.lang.String">
+            <column name="username" length="20">
+                <comment>用户登录名称</comment>
+            </column>
+        </property>
+        <property name="realname" type="java.lang.String">
+            <column name="realname" length="30">
+                <comment>真实名称</comment>
+            </column>
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" length="20">
+                <comment>密码</comment>
+            </column>
+        </property>
+        <property name="joinip" type="java.lang.String">
+            <column name="joinip" length="16">
+                <comment>注册IP</comment>
+            </column>
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="state">
+                <comment>状态</comment>
+            </column>
+        </property>
+        <property name="isadmin" type="java.lang.Integer">
+            <column name="isadmin">
+                <comment>是否管理员=1是 =0否</comment>
+            </column>
+        </property>
+        <property name="mobile" type="java.lang.String">
+            <column name="mobile">
+                <comment>手机号</comment>
+            </column>
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="email">
+                <comment>邮箱</comment>
+            </column>
+        </property>
+        <property name="roles" type="java.lang.String">
+            <column name="roles">
+                <comment>角色集合</comment>
+            </column>
+        </property>
+        <!-- 
+        <property name="departId" type="java.lang.Integer">
+            <column name="depart_id">
+                <comment>部门集合</comment>
+            </column>
+        </property>
+        -->
+        <many-to-one name="department" class="com.appleframework.oss.boss.entity.Department" fetch="join" lazy="false">
+            <column name="depart_id">
+            	<comment>部门ID</comment>
+            </column>
+        </many-to-one>
+        <property name="departPath" type="java.lang.String">
+            <column name="depart_path">
+                <comment>部门路径</comment>
+            </column>
+        </property>
+        
+        <property name="createTime" type="java.util.Date">
+            <column name="create_time">
+                <comment>创建日期</comment>
+            </column>
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="update_time">
+                <comment>修改日期</comment>
+            </column>
+        </property>
+        <property name="lastOperatorId" type="java.lang.Integer">
+            <column name="last_operator_id">
+                <comment>最后修改操作人ID</comment>
+            </column>
+        </property>
+        <property name="lastOperatorName" type="java.lang.String">
+            <column name="last_operator_name" length="64">
+                <comment>最后修改操作人姓名</comment>
+            </column>
+        </property>
+        
+        <set name="rtsUserRoles" inverse="true" fetch="join" lazy="false" order-by="role_id asc">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="com.appleframework.oss.boss.entity.RtsUserRole" />
+        </set>
+        
+    </class>
+</hibernate-mapping>

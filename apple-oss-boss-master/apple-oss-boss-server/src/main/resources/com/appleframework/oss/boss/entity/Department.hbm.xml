@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.appleframework.oss.boss.entity.Department" table="platform_department">
+        <id name="id" type="java.lang.Integer">
+            <column name="id">
+            	<comment>部门ID号</comment>
+            </column>
+            <generator class="com.appleframework.oss.boss.id.IDGenerator" />
+        </id>        
+        
+        <property name="name" type="java.lang.String">
+            <column name="name" length="20">
+                <comment>部门名称</comment>
+            </column>
+        </property>
+        <property name="parentId" type="java.lang.Integer">
+	   		<column name="parent_id">
+	       		<comment>上级部门ID号</comment>
+	      	</column>
+	 	</property>
+        <property name="path" type="java.lang.String">
+	 		<column name="path">
+	      		<comment>部门路径</comment>
+	  		</column>
+		</property>
+		<property name="grade" type="java.lang.Integer">
+			<column name="grade">
+	   			<comment>菜单的层次级别</comment>
+	    	</column>
+	 	</property>
+	 	<property name="iorder" type="java.lang.Integer">
+	 		<column name="iorder">
+	    		<comment>排序</comment>
+	   		</column>
+	   	</property>
+        
+        <property name="createTime" type="java.util.Date">
+            <column name="create_time">
+                <comment>创建日期</comment>
+            </column>
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="update_time">
+                <comment>修改日期</comment>
+            </column>
+        </property>
+        <property name="lastOperatorId" type="java.lang.Integer">
+            <column name="last_operator_id">
+                <comment>最后修改操作人ID</comment>
+            </column>
+        </property>
+        <property name="lastOperatorName" type="java.lang.String">
+            <column name="last_operator_name" length="64">
+                <comment>最后修改操作人姓名</comment>
+            </column>
+        </property>
+       	        
+    </class>
+</hibernate-mapping>
