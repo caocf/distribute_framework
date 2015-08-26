@@ -1,0 +1,20 @@
+<SimpleHbase>
+	
+	<HBaseTableSchema tableName="obd_multtrace_v2" defaultFamily="info">
+		<HBaseColumnSchema qualifier="sn" typeName="string" />
+		<HBaseColumnSchema qualifier="type" typeName="string" />
+		<HBaseColumnSchema qualifier="longitude" typeName="string" />
+		<HBaseColumnSchema qualifier="latitude" typeName="string" />
+		<HBaseColumnSchema qualifier="altitude" typeName="string" />
+		
+		<HBaseColumnSchema qualifier="speed" typeName="string" />
+		<HBaseColumnSchema qualifier="gpsTime" typeName="string" />
+		<HBaseColumnSchema qualifier="accessTime" typeName="string" />
+		<HBaseColumnSchema qualifier="receiveTime" typeName="string" />
+		<HBaseColumnSchema qualifier="storageTime" typeName="string" />
+	</HBaseTableSchema>
+	
+</SimpleHbase>   
+
+
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:hdp="http://www.springframework.org/schema/hadoop" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop-1.0.xsd">
+
+	<hdp:configuration>
+		fs.default.name=${fs.default.name}
+	</hdp:configuration>
+
+	<hdp:hbase-configuration delete-connection="true" stop-proxy="false">		
+		hbase.rootdir=${hbase.rootdir}
+		hbase.zookeeper.quorum=${hbase.zookeeper.quorum}
+		
+		hbase.cluster.distributed=true
+		zookeeper.session.timeout=180000
+		hbase.zookeeper.property.tickTime=4000
+		hbase.zookeeper.property.clientPort=2181
+		dfs.replication=3
+		hbase.zookeeper.property.dataDir=${hbase.zookeeper.property.dataDir}
+		hbase.regionserver.handler.count=100
+		hbase.hregion.max.filesize=10737418240
+		hbase.regionserver.global.memstore.upperLimit=0.4
+		hbase.regionserver.global.memstore.lowerLimit=0.35
+		hfile.block.cache.size=0.2
+		hbase.hstore.blockingStoreFiles=20
+		hbase.hregion.memstore.block.multiplier=2
+		hbase.hregion.memstore.mslab.enabled=true  
+		hbase.client.scanner.timeout.period=6000000
+     	hbase.client.write.buffer=20971520
+   		hbase.hregion.memstore.flush.size=268435456
+     	hbase.client.pause=20
+   		hbase.client.retries.number=11
+		
+	</hdp:hbase-configuration>
+	
+	<bean id="tablePool" class="org.apache.hadoop.hbase.client.HTablePool">
+		<constructor-arg ref="hbaseConfiguration" />
+		<constructor-arg value="10" />
+	</bean>
+
+	<bean id="tableFactory" class="com.appleframework.data.hbase.PooledHTableFactory">
+		<constructor-arg ref="tablePool" />
+	</bean>
+	
+	<bean id="hbaseTemplate2" class="com.appleframework.data.hbase.HbaseTemplate2"
+		p:configuration-ref="hbaseConfiguration" p:tableFactory-ref="tableFactory">
+		<property name="autoFlush" value="false" />
+	</bean>
+	
+</beans>
