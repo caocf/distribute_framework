@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<context:property-placeholder location="classpath*:jms.properties" ignore-unresolvable="true" />
+	
+	<bean id="connectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">  
+	        <bean class="org.apache.activemq.ActiveMQConnectionFactory">  
+	            <property name="brokerURL" value="${jms.broker.url}" />  
+	        </bean>  
+	    </property>  
+	</bean>
+    
+    <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0">
+			<value>${jms.destination.queue}</value>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+         <property name="connectionFactory" ref="connectionFactory" />
+    </bean>
+    
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+         <property name="connectionFactory" ref="connectionFactory" />
+    </bean>
+    
+    <bean id="messageSender" class="com.appleframework.jms.core.producer.JmsMessageProducer">
+         <property name="jmsTemplate" ref="jmsTemplate" />
+         <property name="destination" ref="destination" />
+    </bean>
+    
+	<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    	 <property name="connectionFactory" ref="connectionFactory" />
+    	 <property name="destination" ref="destination" />
+    	 <property name="messageListener" ref="messageQueueReceiver" /> 
+    	 <property name="sessionTransacted" value="true"/>
+    	 <property name="recoveryInterval" value="10000"/>
+    	 <property name="maxMessagesPerTask" value="1000"/>    	 
+    </bean>
+    
+	
+</beans>
