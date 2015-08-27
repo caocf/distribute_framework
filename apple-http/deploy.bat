@@ -1,0 +1,1 @@
+cmd /k mvn deploy -D skipTests=true
