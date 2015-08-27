@@ -1,0 +1,28 @@
+签名算法借鉴于ROP项目,感谢ROP团队.
+
+签名算法描述如下：
+1.所有请求参数按参数名升序排序；
+2.按请求参数名及参数值相互连接组成一个字符串：<paramName1><paramValue1><paramName2><paramValue2>…；
+3.将应用密钥分别添加到以上请求参数串的头部和尾部：<secret><请求参数字符串><secret>；
+4.对该字符串进行SHA1运算，得到一个二进制数组；
+5.将该二进制数组转换为十六进制的字符串，该字符串即是这些请求参数对应的签名；
+6.该签名值使用sign参数一起和其它请求参数一起发送给服务开放平台。
+
+假设http://localhost/openTest/listApiStudent.do请求有以下参数:
+appId=test // 接入的appId,由服务方提供
+timestamp=330523156522 // 时间戳
+schName=Jim // 查询字段
+pageIndex=1 // 当前页索引
+pageSize=10 // 每页大小
+
+根据签名算法，首先按字母顺序将所有参数名和参数值拼装成一个字符串：
+appIdtestpageIndex1pageSize10schNameJimtimestamp330523156522
+
+假设，appId为"test"的 secret（应用密钥）是“123456”，则将“123456”分别添加
+到以上请求参数串的头部和尾部，得到：
+123456appIdtestpageIndex1pageSize10schNameJimtimestamp330523156522123456
+
+对以上字符串进行 SHA1 签名运算，将签名值转换为十六进制的编码串，得到：
+520C0DCDF81023E78B27CC97183341F4A8485139
+最后，客户端即可使用如下的 URL进行请求:
+http://localhost/openTest/listApiStudent.do?appId=test&timestamp=330523156522&schName=Jim&sign=520C0DCDF81023E78B27CC97183341F4A8485139
